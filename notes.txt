@@ -1,0 +1,28 @@
+Check for valid move using transformation sets
+
+To check for collision:
+We can say if we are at this space and moving this way 
+to another space then we must have passed these spaces
+SO 
+  A rook moves from [1,1] to [1,4]
+  We can take everything in between [1,1] and [1,4]
+  or we can say y+1 y+1 y+1
+  A queen moves from [5,1] to [1,5]
+    [4,2]
+    [3,3]
+    [2,4]
+    [1,5]
+
+      SO we can take current pos 
+
+Keep track of pieces with something like
+    [ [3, 4, 'Rook'],
+      [3, 4, 'pawn'],
+      [3, 4, 'pawn'],
+      [3, 4, 'pawn'] ]
+  end
+
+  check transforms that could move to king pos to check for CHECK and CHECKMATE
+  If black can move to white king then 
+    then compare all black transforms to white king transforms for checkmate
+  If black can move to where white would move checkmate
