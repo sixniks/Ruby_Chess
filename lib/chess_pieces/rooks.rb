@@ -1,7 +1,7 @@
 class ROOKS
   attr_accessor :starting_pos, :current_position, :name
 
-  def initialize(name, x_pos = 8, y_pos = 8)
+  def initialize(name = '', x_pos = 8, y_pos = 8)
     @name = name
     @x_pos = x_pos
     @y_pos = y_pos

@@ -1,7 +1,7 @@
 class BISHOPS
   attr_accessor :starting_pos, :bishop_white_right, :bishops, :current_position, :name
 
-  def initialize(name, x_pos = 3, y_pos = 8)
+  def initialize(name = '', x_pos = 3, y_pos = 8)
     @name = name
     @x_pos = x_pos
     @y_pos = y_pos

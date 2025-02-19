@@ -23,14 +23,19 @@ class Board
   attr_accessor :total_board, :pawns
 
   def initialize
-    bishops = BISHOPS.make_bishops
-    kings = KINGS.make_kings
-    queens = QUEENS.make_queens
-    rooks = ROOKS.make_rooks
-    knights = KNIGHTS.make_knights
+    @bishops = BISHOPS.new
+    all_bishops = BISHOPS.make_bishops
+    @kings = KINGS.new
+    all_kings = KINGS.make_kings
+    @queens = QUEENS.new
+    all_queens = QUEENS.make_queens
+    @rooks = ROOKS.new
+    all_rooks = ROOKS.make_rooks
+    @knights = KNIGHTS.new
+    all_knights = KNIGHTS.make_knights
     @pawns = PAWNS.new
     all_pawns = @pawns.make_pawns
-    @total_board = all_pawns, knights, queens, kings, rooks, bishops
+    @total_board = all_pawns, all_knights, all_queens, all_kings, all_rooks, all_bishops
   end
 
   # Row is x

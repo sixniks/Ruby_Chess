@@ -1,7 +1,7 @@
 class KINGS
   attr_accessor :starting_pos, :kings, :current_position, :name
 
-  def initialize(name, x_pos = 5, y_pos = 8)
+  def initialize(name = '', x_pos = 5, y_pos = 8)
     @name = name
     @x_pos = x_pos
     @y_pos = y_pos

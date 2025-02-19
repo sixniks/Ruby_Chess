@@ -1,7 +1,7 @@
 class KNIGHTS
   attr_accessor :starting_pos, :current_position, :name
 
-  def initialize(name, x_pos = 2, y_pos = 1)
+  def initialize(name = '', x_pos = 2, y_pos = 1)
     @name = name
     @x_pos = x_pos
     @y_pos = y_pos
