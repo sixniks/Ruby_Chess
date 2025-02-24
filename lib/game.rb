@@ -1,14 +1,18 @@
 require_relative 'board'
+# BUGS:
+# WHEN
+# A player tries to move the opposing players piece, the next input is
+# always treated as invalid
+# Pawns can move diagnoally even if there is no opposing piece'
+# Spaces ([ ]) are colored incorrectly
+
 # TO DO:
-# Collision
-# rename transforms in pieces
-# Fix method calls in move_piece
 # Check and Checkmate
-# Redo for input
-# Show board at start
 # Pawn into Queen
 # Castling
 # Display grid numbers
+# Serialize
+# CPU moves
 class Game < Board
   attr_accessor :board, :white_turn, :black_mate, :white_mate
 
@@ -24,13 +28,12 @@ class Game < Board
     while @black_mate || @white_mate == false
       puts "White Turn \n" if @white_turn
       puts 'Black Turn' unless @white_turn
-
+      game.render
       piece_to_move = valid_input_select?
       puts "you selected #{piece_to_move.name}"
       selected_position = piece_to_move.current_position
 
-      move_piece(piece_to_move, selected_position)
-      # move_piece(piece_to_move, selected_position, new_position)
+      move_piece(piece_to_move, selected_position, game)
       game.render
       @white_turn = !@white_turn
     end
@@ -40,6 +43,7 @@ class Game < Board
     puts "\nPlease select your piece using the x and y cordinates. Example: 1,1"
     selected_position = gets.chomp.split(',').map(&:to_i)
     @total_board.flatten.each do |piece|
+      # p piece
       next unless piece.current_position == selected_position
 
       if piece.name.include?('white') && @white_turn
@@ -47,7 +51,6 @@ class Game < Board
         return piece
       end
       if piece.name.include?('white') && !@white_turn
-        puts 'white moves black'
         puts ' black cannot move white pieces'
         valid_input_select?
       end
@@ -61,32 +64,42 @@ class Game < Board
     valid_input_select?
   end
 
-  def move_piece(piece_to_move, selected_position)
+  def move_piece(piece_to_move, selected_position, game)
     puts 'Please select where you want the piece to move'
-    return unless piece_to_move.name.include?('pawn')
-
-    loop until pawns.move_pawn(selected_position, new_position = gets.chomp.split(',').map(&:to_i),
-                               @total_board) != false
-
-    new_position
-
-    ### DO COLISSION checking here
-    #    # @total_board.flatten.each do |piece|
-    #   p piece.transforms
-    # return new_position unless piece.current_position == new_position
-
-    # valid_input_move?
+    # rubocop:disable Style\GuardClause
+    # loop until new_position = gets.chomp.split(',').map(&:to_i).all? { |item| item.between(1, 8) }
+    if piece_to_move.name.include?('pawn')
+      loop until pawns.move_pawn(selected_position, new_position = gets.chomp.split(',').map(&:to_i),
+                                 @total_board, game) != false
+      new_position
+    end
+    if piece_to_move.name.include?('queen')
+      loop until queens.move_queen(selected_position, new_position = gets.chomp.split(',').map(&:to_i),
+                                   @total_board) != false
+      new_position
+    end
+    if piece_to_move.name.include?('king')
+      loop until kings.move_king(selected_position, new_position = gets.chomp.split(',').map(&:to_i),
+                                 @total_board) != false
+      new_position
+    end
+    if piece_to_move.name.include?('bishop')
+      loop until bishops.move_bishop(selected_position, new_position = gets.chomp.split(',').map(&:to_i),
+                                     @total_board) != false
+      new_position
+    end
+    if piece_to_move.name.include?('rook')
+      loop until rooks.move_rooks(selected_position, new_position = gets.chomp.split(',').map(&:to_i),
+                                  @total_board) != false
+      new_position
+    end
+    if piece_to_move.name.include?('knight')
+      loop until knights.move_knight(selected_position, new_position = gets.chomp.split(',').map(&:to_i),
+                                     @total_board) != false
+      new_position
+    end
   end
 end
 
 game = Game.new
 game.game_loop(game)
-# game.move_piece(1, 2, 1, 3)
-# game.move_piece(1, 3, 1, 4)
-# game.move_piece(1, 4, 1, 5)
-# game.move_piece(8, 2, 8, 3)
-# game.board.total_board
-# game.render
-
-# p @board.total_board
-# @board.render

@@ -20,19 +20,19 @@ class Board
   BLACKBISHOP = ' [♗ ] '.colorize(:black)
   EMPTY = ' [  ] '
 
-  attr_accessor :total_board, :pawns
+  attr_accessor :total_board, :pawns, :queens, :kings, :bishops, :rooks, :knights, :current_position
 
   def initialize
     @bishops = BISHOPS.new
-    all_bishops = BISHOPS.make_bishops
+    all_bishops = @bishops.make_bishops
     @kings = KINGS.new
-    all_kings = KINGS.make_kings
+    all_kings = @kings.make_kings
     @queens = QUEENS.new
-    all_queens = QUEENS.make_queens
+    all_queens = @queens.make_queens
     @rooks = ROOKS.new
-    all_rooks = ROOKS.make_rooks
+    all_rooks = @rooks.make_rooks
     @knights = KNIGHTS.new
-    all_knights = KNIGHTS.make_knights
+    all_knights = @knights.make_knights
     @pawns = PAWNS.new
     all_pawns = @pawns.make_pawns
     @total_board = all_pawns, all_knights, all_queens, all_kings, all_rooks, all_bishops
