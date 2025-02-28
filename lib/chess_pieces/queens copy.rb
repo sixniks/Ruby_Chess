@@ -15,7 +15,7 @@ class QUEENS
     @current_x = @x_pos
     @current_y = @y_pos
     @current_position = [@x_pos, @y_pos]
-    @range = (1..7)
+    @range = (0..7)
     @transforms = [
       @range.map { |i| [@x_pos, @y_pos + i] }, # vertical up
       @range.map { |i| [@x_pos, @y_pos - i] }, # vertical down
@@ -34,37 +34,48 @@ class QUEENS
   end
 
   def move_queen(selected_position, new_position, total_board, game, dont_move)
-    # @x_pos = selected_position[0]
-    # @y_pos = selected_position[1]
-
+    @x_pos = selected_position[0]
+    @y_pos = selected_position[1]
     queen_to_move = find_queen(selected_position, total_board)
-    # puts "queen_to_move.transforms #{queen_to_move.transforms}"
+
+    queen_to_move.range = (1..7)
+
+    queen_to_move.transforms = [
+      queen_to_move.range.map { |i| [queen_to_move.x_pos, queen_to_move.y_pos + i, 'vertical up'] }, # vertical up
+      queen_to_move.range.map { |i| [queen_to_move.x_pos, queen_to_move.y_pos - i, 'vertical down'] }, # vertical down
+      queen_to_move.range.map do |i|
+        [queen_to_move.x_pos + i, queen_to_move.y_pos, 'horizontal right']
+      end,
+      queen_to_move.range.map do |i|
+        [queen_to_move.x_pos - i, queen_to_move.y_pos, 'horizontal left']
+      end,
+      queen_to_move.range.map do |i|
+        [queen_to_move.x_pos - i, queen_to_move.y_pos + i, 'diagonaol up-left']
+      end,
+      queen_to_move.range.map do |i|
+        [queen_to_move.x_pos + i, queen_to_move.y_pos + i, 'diagonaol up-right']
+      end,
+      queen_to_move.range.map do |i|
+        [queen_to_move.x_pos - i, queen_to_move.y_pos - i, 'diagonaol down-left']
+      end,
+      queen_to_move.range.map do |i|
+        [queen_to_move.x_pos + i, queen_to_move.y_pos - i, 'diagonaol down-right']
+      end,
+      queen_to_move.range.map { |i| [queen_to_move.x_pos, queen_to_move.y_pos, 'No move'] } # No move
+    ]
     queen_to_move.transforms.each do |item|
-      # puts "item is #{item}"
       item.each do |item2|
-        # puts "item2 is #{item2}"
-        # puts "item2 inx 0 is #{item2[2]}"
-        # next unless item2.nil? || item2 == Integer
-        next if item2.nil?
+        transform_used = item2.pop unless item2.nil?
+        next unless item2 == new_position
 
-        transform_used = item2[2]
-        index_0 = item2[0]
-        index_1 = item2[1]
-        find_pos = [index_0, index_1]
-        # p find_pos
-        # p "new pos UP #{new_position}"
-        # puts "transform_used is #{transform_used}"
-        next unless find_pos == new_position
-
-        # puts 'FOUND'
         moved_spaces = find_to_be_moved_spaces(transform_used, new_position, queen_to_move, total_board)
-        # puts "moved spaces is #{moved_spaces}"
+        puts "moved spaces is #{moved_spaces}"
         if moved_spaces.nil? || check_for_collision(transform_used, new_position, queen_to_move, moved_spaces,
                                                     total_board, dont_move) == (false)
           return false
         else
 
-          # puts 'True?'
+          puts 'True?'
           # total_board.delete(queen_to_move) unless dont_move
           queen_to_move.current_position = new_position unless dont_move
           queen_to_move.has_moved = true unless dont_move
@@ -84,74 +95,35 @@ class QUEENS
     puts 'REACHED false'
   end
 
-  def update_transforms(total_board)
-    total_board.flatten.each do |piece|
-      next unless piece.name.include?('Queen')
-
-      piece.transforms = [
-        piece.range.map { |i| [piece.x_pos, piece.y_pos + i, 'vertical up'] }, # vertical up
-        piece.range.map { |i| [piece.x_pos, piece.y_pos - i, 'vertical down'] }, # vertical down
-        piece.range.map do |i|
-          [piece.x_pos + i, piece.y_pos, 'horizontal right']
-        end,
-        piece.range.map do |i|
-          [piece.x_pos - i, piece.y_pos, 'horizontal left']
-        end,
-        piece.range.map do |i|
-          [piece.x_pos - i, piece.y_pos + i, 'diagonaol up left']
-        end,
-        piece.range.map do |i|
-          [piece.x_pos + i, piece.y_pos + i, 'diagonaol up right']
-        end,
-        piece.range.map do |i|
-          [piece.x_pos - i, piece.y_pos - i, 'diagonaol down left']
-        end,
-        piece.range.map do |i|
-          [piece.x_pos + i, piece.y_pos - i, 'diagonaol down right']
-        end
-        # piece.range.map { |i| [piece.x_pos, piece.y_pos, 'No move'] } # No move
-      ]
-    end
-  end
-
   def get_possible_moves(total_board, game)
-    update_transforms(total_board)
     dont_move = true
     queen_transforms_black = []
     queen_transforms_white = []
-    queen_transforms = []
     total_board.flatten.each do |piece|
       next unless piece.name.include?('Queen')
 
-      piece.transforms.each do |transform_pair|
-        transform_pair.each do |transform|
-          next if transform.nil?
+      selected_position = piece.current_position
+      new_position = piece.transforms.each
+      new_position.each do |pos|
+        pos.map do |pos2|
+          next unless move_queen(selected_position, pos2, total_board, game, dont_move) != false
 
-          queen_transforms << [transform[0], transform[1], piece.team,
-                               piece.current_position]
-          puts "transforms #{[transform[0], transform[1]]}"
+          piece.transforms.clear
+
+          if piece.team == 'white'
+            if !pos2.nil? && !(pos2[0] > 8 || pos2[0] < 1 || pos2[1] > 8 || pos2[1] < 1)
+              queen_transforms_white << pos2
+              piece.transforms << pos2
+            end
+          elsif piece.team == 'black'
+            if !pos2.nil? && !(pos2[0] > 8 || pos2[0] < 1 || pos2[1] > 8 || pos2[1] < 1)
+              queen_transforms_black << pos2
+              piece.transforms << pos2
+            end
+          end
         end
       end
     end
-    # p queen_transforms
-    # selected_position = []
-    queen_transforms.each do |transform|
-      # puts "transform #{transform}"
-      # next if selected_position == transform[3]
-
-      selected_position = transform[3]
-
-      new_position = [transform[0], transform[1]]
-      # puts "new position is #{new_position}"
-      next unless move_queen(selected_position, new_position, total_board, game, dont_move = true) != false
-
-      if transform.include?('white')
-        queen_transforms_white << [transform[0], transform[1]]
-      elsif transform.include?('black')
-        queen_transforms_black << [transform[0], transform[1]]
-      end
-    end
-
     [queen_transforms_black, queen_transforms_white]
   end
 
@@ -160,7 +132,7 @@ class QUEENS
   end
 
   def find_to_be_moved_spaces(transform_used, new_position, queen_to_move, total_board)
-    # puts "#{transform_used}transformed used"
+    puts "#{transform_used}transformed used"
     case transform_used
     when 'vertical up' then vertical_up(transform_used, new_position, queen_to_move, total_board)
     when 'vertical down' then vertical_down(transform_used, new_position, queen_to_move, total_board)
@@ -173,54 +145,42 @@ class QUEENS
     end
   end
 
-  def check_for_collision(transform_used, new_position, queen_to_move, moved_spaces, total_board, dont_move) # \GuardClause
+  def check_for_collision(transform_used, new_position, queen_to_move, moved_spaces, total_board, dont_move)
     # rubocop:disable Style\GuardClause
-    p "moved spaces is col UP #{moved_spaces}"
-    return false if moved_spaces.nil? || moved_spaces == false
+    return false if moved_spaces.nil?
 
-    # @count += 1
-    # puts "count is #{@count}"
-    p "moved spaces is #{moved_spaces}"
+    # @count_queen += 1
+    # puts "count queen is #{@count_queen}"
     moved_spaces.each do |space|
-      return true if total_board.flatten.any? { |item| item.current_position == space } == false
+      next unless total_board.flatten.any? { |item|
+        item.current_position == space
+      }
 
-      puts 'total_board.flatten.any? queens'
+      puts 'total_board.flatten.any? queen'
       to_be_captured_piece = check_for_opposing_piece(transform_used, new_position, queen_to_move,
-                                                      total_board)
-      # puts "dont move #{dont_move}"
-      # puts "to_be_captured_piece #{to_be_captured_piece}"
-      puts "dont move is #{dont_move}"
-      if dont_move == true
-
-        return true
-      elsif to_be_captured_piece != false
-        puts "Captured piece"
+                                                      total_board, dont_move)
+      if to_be_captured_piece == false || dont_move == true
+        puts "false QUEEN"
+        return false
+      else
+        puts "true CAPTURED"
         to_be_captured_piece.current_position = [-10, -10]
         to_be_captured_piece.captured = true
         return true
-      elsif dont_move != true && to_be_captured_piece == false
-        puts "true"
-        return true
       end
     end
-    false
+    puts "end FALSE"
   end
 
-  def check_for_opposing_piece(transform_used, new_position, queen_to_move, total_board)
+  def check_for_opposing_piece(transform_used, new_position, queen_to_move, total_board, dont_move)
     total_board.flatten.any? do |to_be_captured_piece|
-      next unless to_be_captured_piece.current_position == new_position
-
-      # puts "to_be_captured_piece current_position #{to_be_captured_piece.current_position}"
-      # puts "new position #{new_position}"
-
-      if queen_to_move.team != (to_be_captured_piece.team)
-        puts 'true'
+      if to_be_captured_piece.current_position == new_position && queen_to_move.team != (to_be_captured_piece.team) && !dont_move
+        to_be_captured_piece.captured = true
         return to_be_captured_piece
-      else
-        puts 'false'
-        return false
       end
     end
+    puts "false check_for_opposing_piece "
+    false
   end
 
   def vertical_up(_transform_used, new_position, queen_to_move, total_board)
@@ -255,8 +215,7 @@ class QUEENS
     moved_spaces = []
     x = new_position[0]
     y = new_position[1]
-    range = ((queen_to_move.current_x - x)..(y - queen_to_move.current_y))
-    p range
+    range = ((x - queen_to_move.current_x)..(y - queen_to_move.current_y))
     transform = range.map { |i| [queen_to_move.current_x - i, queen_to_move.current_y + i] }
     moved_spaces << transform
     fixed_moved_spaces = moved_spaces.join('').each_char.each_slice(2).to_a

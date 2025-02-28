@@ -55,29 +55,29 @@ class Board
           next unless item.current_position == [column, row]
 
           name = item.name
-          @emoji = if name == 'black_pawns'
+          @emoji = if name == 'Black Pawn'
                      BLACKPAWN
-                   elsif name == 'white_pawns'
+                   elsif name == 'White Pawn'
                      WHITEPAWN
-                   elsif name == 'white_knight'
+                   elsif name == 'White Knight'
                      WHITEKNIGHT
-                   elsif name == 'black_knight'
+                   elsif name == 'Black Knight'
                      BLACKKNIGHT
-                   elsif name == 'black_rook'
+                   elsif name == 'Black Rook'
                      BLACKROOK
-                   elsif name == 'white_rook'
+                   elsif name == 'White Rook'
                      WHITEROOK
-                   elsif name == 'white_queen'
+                   elsif name == 'White Queen'
                      WHITEQUEEN
-                   elsif name == 'black_queen'
+                   elsif name == 'Black Queen'
                      BLACKQUEEN
-                   elsif name == 'black_king'
+                   elsif name == 'Black King'
                      BLACKKING
-                   elsif name == 'white_king'
+                   elsif name == 'White King'
                      WHITEKING
-                   elsif name == 'bishop_black'
+                   elsif name == 'Black Bishop'
                      BLACKBISHOP
-                   elsif name == 'bishop_white'
+                   elsif name == 'White Bishop'
                      WHITEBISHOP
                    else
                      EMPTY
