@@ -26,8 +26,8 @@ class PAWNS
       (1..1).map { |i| [@x_pos - i, @y_pos + i, 'diagonaol up left'] unless self.name == 'Black Pawn' },
       (1..1).map { |i| [@x_pos + i, @y_pos + i, 'diagonaol up right'] unless self.name == 'Black Pawn' },
       (1..1).map { |i| [@x_pos - i, @y_pos - i, 'diagonaol down left'] unless self.name == 'White Pawn' },
-      (1..1).map { |i| [@x_pos + i, @y_pos - i, 'diagonaol down right'] unless self.name == 'White Pawn' }
-      # (1..1).map { |i| [@x_pos, @y_pos, 'no move'] }
+      (1..1).map { |i| [@x_pos + i, @y_pos - i, 'diagonaol down right'] unless self.name == 'White Pawn' },
+      (1..1).map { |i| [@x_pos, @y_pos, 'no move'] }
     ]
   end
 
@@ -100,17 +100,17 @@ class PAWNS
         index_1 = item2[1]
         find_pos = [index_0, index_1]
         # p find_pos
-        # puts "transform_used is #{transform_used}"
+        puts "transform_used is #{transform_used}"
         next unless find_pos == new_position
 
         moved_spaces = find_to_be_moved_spaces(transform_used, new_position, pawn_to_move, total_board)
-        # puts "moved spaces UP #{moved_spaces}"
+        puts "moved spaces UP #{moved_spaces}"
         if moved_spaces.nil? || check_for_collision(transform_used, new_position, pawn_to_move, moved_spaces,
                                                     total_board, dont_move) == (false)
-          # puts 'FALSE'
+          puts 'FALSE'
           return false
         else
-          # puts 'NOT FALSE'
+          puts 'NOT FALSE'
           # total_board.delete(pawn_to_move) unless dont_move
           pawn_to_move.current_position = new_position unless dont_move
           pawn_to_move.has_moved = true unless dont_move
@@ -131,7 +131,6 @@ class PAWNS
   end
 
   def get_possible_moves(total_board, game)
-    # update_transforms(total_board)
     dont_move = true
     pawn_transforms_black = []
     pawn_transforms_white = []
@@ -143,9 +142,7 @@ class PAWNS
         transform_pair.each do |transform|
           next if transform.nil?
 
-          pawn_transforms << [transform[0], transform[1], piece.team,
-                              piece.current_position]
-          # puts "transforms #{[transform[0], transform[1]]}"
+          pawn_transforms << [transform[0], transform[1], piece.team, piece.current_position]
         end
       end
     end
@@ -156,8 +153,8 @@ class PAWNS
       # next if selected_position == transform[3]
 
       selected_position = transform[3]
+
       new_position = [transform[0], transform[1]] if transform[0].between?(1, 8) && transform [1].between?(1, 8)
-      # puts "new position is #{new_position}"
       next unless move_pawn(selected_position, new_position, total_board, game, dont_move = true) != false
 
       if transform.include?('white')
@@ -166,9 +163,8 @@ class PAWNS
         pawn_transforms_black << [transform[0], transform[1]]
       end
     end
-    # puts "pawn_transforms_black POS#{pawn_transforms_black}"
-    # puts "pawn_transforms_white POS #{pawn_transforms_white}"
-    [pawn_transforms_black.uniq, pawn_transforms_white.uniq]
+
+    [pawn_transforms_black, pawn_transforms_white]
   end
 
   def find_pawn(selected_position, total_board)
@@ -186,49 +182,37 @@ class PAWNS
     end
   end
 
-  def check_for_collision(transform_used, new_position, pawn_to_move, moved_spaces, total_board, dont_move) # \GuardClause
-    # p "moved spaces is col UP #{moved_spaces}"
-    # @count_pawn += 1
-    # puts "count is #{@count_pawn}"
-    # IF there exists piece(s) in the moved spaces path and its not the last one(new position)
-    # We know we are either capturing or colliding with own piece
-    # [4,1]
-    # [5,2]
-    # [6,3]
-    # [7,4]
-    # [8,5]
-    #
+  def check_for_collision(transform_used, new_position, pawn_to_move, moved_spaces, total_board, dont_move)
+    # rubocop:disable Style\GuardClause
+    p "moved spaces is col UP #{moved_spaces}"
     return false if moved_spaces.nil? || moved_spaces == false
 
-    # puts "transform used #{transform_used}"
-    # moved_spaces.shift if moved_spaces.length > 1
+    # @count += 1
+    # puts "count is #{@count}"
+    p "moved spaces is #{moved_spaces}"
     moved_spaces.each do |space|
-      next if space == pawn_to_move.current_position
+      return true if total_board.flatten.any? { |item| item.current_position == space } == false
 
-      total_board.flatten.any? do |piece|
-        # puts "piece current pos #{piece.current_position}"
-        # puts "space #{space}"
-        # puts "piece team #{piece.team}"
-        # puts "pawn team #{pawn_to_move.team}"
-        if piece.current_position == space && pawn_to_move.team == piece.team
+      puts 'total_board.flatten.any? pawns'
+      to_be_captured_piece = check_for_opposing_piece(transform_used, new_position, pawn_to_move,
+                                                      total_board)
+      # puts "dont move #{dont_move}"
+      # puts "to_be_captured_piece #{to_be_captured_piece}"
+      puts "dont move is #{dont_move}"
+      if dont_move == true
 
-          # puts 'Collision detected did you mean to capture a piece'
-          return false
-        elsif piece.current_position == space && pawn_to_move.team != piece.team && dont_move == false && transform_used.include?('diagonaol')
-          piece.current_position = [-10, -10]
-          puts 'Capture'
-          return true
-        elsif piece.current_position == space && pawn_to_move.team != piece.team && !transform_used.include?('diagonaol')
-          return false
-        elsif piece.current_position == space && transform_used.include?('diagonaol')
-          # puts "piece team #{piece.team}"
-          # puts "pawn_to_move.team #{pawn_to_move.team}"
-          return false unless pawn_to_move.team != piece.team
-
-          return true
-        end
+        return true
+      elsif to_be_captured_piece != false
+        puts "Captured piece"
+        to_be_captured_piece.current_position = [-10, -10]
+        to_be_captured_piece.captured = true
+        return true
+      elsif dont_move != true && to_be_captured_piece == false
+        puts "true"
+        return true
       end
     end
+    false
   end
 
   def check_for_opposing_piece(transform_used, new_position, pawn_to_move, total_board)
@@ -242,10 +226,10 @@ class PAWNS
       puts "new position #{new_position}"
 
       if pawn_to_move.team != (to_be_captured_piece.team) && transform_used.include?('diagonaol')
-        puts 'true'
+        puts "true"
         return to_be_captured_piece
       else
-        puts 'false'
+        puts "false"
         return false
       end
     end
@@ -255,14 +239,14 @@ class PAWNS
     moved_spaces = []
     x = new_position[0]
     y = new_position[1]
-    range = ((1)..(y - pawn_to_move.current_y))
+    range = ((x - pawn_to_move.current_x + 1)..(y - pawn_to_move.current_y))
     transform = range.map { |i| [pawn_to_move.current_x, pawn_to_move.current_y + i] }
     moved_spaces << transform
     fixed_moved_spaces = moved_spaces.join('').each_char.each_slice(2).to_a
     fixed_moved_spaces.map! do |piece|
       piece.map(&:to_i)
     end
-    # puts "fixed moved spaces #{fixed_moved_spaces}"
+    puts "fixed moved spaces #{fixed_moved_spaces}"
     fixed_moved_spaces
   end
 
@@ -270,7 +254,7 @@ class PAWNS
     moved_spaces = []
     x = new_position[0]
     y = new_position[1]
-    range = ((1)..(pawn_to_move.current_y - y))
+    range = ((pawn_to_move.current_x - x + 1)..(pawn_to_move.current_y - y))
     transform = range.map { |i| [pawn_to_move.current_x, pawn_to_move.current_y - i] }
 
     moved_spaces << transform
@@ -285,14 +269,14 @@ class PAWNS
     moved_spaces = []
     x = new_position[0]
     y = new_position[1]
-    range = ((0)..(y - pawn_to_move.current_y))
+    range = ((pawn_to_move.current_x - x)..(y - pawn_to_move.current_y))
     transform = range.map { |i| [pawn_to_move.current_x - i, pawn_to_move.current_y + i] }
     moved_spaces << transform
     fixed_moved_spaces = moved_spaces.join('').each_char.each_slice(2).to_a
     fixed_moved_spaces.map! do |piece|
       piece.map(&:to_i)
     end
-    # return false if check_for_opposing_piece(transform_used, new_position, pawn_to_move, total_board) == false
+    return false if check_for_opposing_piece(transform_used, new_position, pawn_to_move, total_board,) == false
 
     fixed_moved_spaces
   end
@@ -307,7 +291,9 @@ class PAWNS
     fixed_moved_spaces.map! do |piece|
       piece.map(&:to_i)
     end
-    # return false if check_for_opposing_piece(transform_used, new_position, pawn_to_move, total_board) == false
+    if check_for_opposing_piece(transform_used, new_position, pawn_to_move, total_board,) == false
+      return false
+    end
 
     fixed_moved_spaces
   end
@@ -320,7 +306,7 @@ class PAWNS
     fixed_moved_spaces.map! do |piece|
       piece.map(&:to_i)
     end
-    # return false if check_for_opposing_piece(transform_used, new_position, pawn_to_move, total_board) == false
+    return false if check_for_opposing_piece(transform_used, new_position, pawn_to_move, total_board,) == false
 
     fixed_moved_spaces
   end
@@ -333,7 +319,7 @@ class PAWNS
     fixed_moved_spaces.map! do |piece|
       piece.map(&:to_i)
     end
-    # return false if check_for_opposing_piece(transform_used, new_position, pawn_to_move, total_board) == false
+    return false if check_for_opposing_piece(transform_used, new_position, pawn_to_move, total_board,) == false
 
     fixed_moved_spaces
   end
