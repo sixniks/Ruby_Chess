@@ -33,36 +33,61 @@ class QUEENS
     @queens = @black_queen, @white_queen
   end
 
-  def move_queen(selected_position, new_position, total_board, game, dont_move)
-    # @x_pos = selected_position[0]
-    # @y_pos = selected_position[1]
+  def update_transforms(total_board, no_collision = false)
+    #rubocop:disable all
     total_board.flatten.each do |piece|
       next unless piece.name.include?('Queen')
 
       piece.transforms = [
-        piece.range.map { |i| [piece.x_pos, piece.y_pos + i, 'vertical up'] }, # vertical up
-        piece.range.map { |i| [piece.x_pos, piece.y_pos - i, 'vertical down'] }, # vertical down
         piece.range.map do |i|
-          [piece.x_pos + i, piece.y_pos, 'horizontal right']
+          if (piece.y_pos + i).between?(1,8) && no_collision == true|| check_for_collision('vertical up', (piece.y_pos + i), piece, find_to_be_moved_spaces('vertical up', (piece.y_pos + i), piece, total_board), total_board, dont_move = true) != false
+            [piece.x_pos, piece.y_pos + i, 'vertical up'] 
+          end
+        end, 
+        piece.range.map do |i|
+          if (piece.y_pos - i).between?(1,8) && no_collision == true||  check_for_collision('vertical down', (piece.y_pos - i), piece, find_to_be_moved_spaces('vertical down', (piece.y_pos - i), piece, total_board), total_board, dont_move = true) != false
+            [piece.x_pos, piece.y_pos - i, 'vertical down']  
+          end
+        end, 
+        piece.range.map do |i|
+          if (piece.x_pos + i).between?(1,8) && no_collision == true||  check_for_collision('horizontal right', (piece.x_pos + i), piece, find_to_be_moved_spaces('horizontal right', (piece.x_pos + i), piece, total_board), total_board, dont_move = true) != false
+            [piece.x_pos + i, piece.y_pos, 'horizontal right']
+          end
         end,
         piece.range.map do |i|
-          [piece.x_pos - i, piece.y_pos, 'horizontal left']
+          if (piece.x_pos - i).between?(1,8) && no_collision == true||  check_for_collision('horizontal left', (piece.x_pos - i), piece, find_to_be_moved_spaces('horizontal left', (piece.x_pos - i), piece, total_board), total_board, dont_move = true) != false
+            [piece.x_pos - i, piece.y_pos, 'horizontal left']
+          end
         end,
         piece.range.map do |i|
-          [piece.x_pos - i, piece.y_pos + i, 'diagonaol up left']
+          if (piece.y_pos + i).between?(1,8) && (piece.x_pos - i).between?(1,8) && no_collision == true|| check_for_collision('diagonaol up left', [piece.x_pos - i, piece.y_pos + i], piece, find_to_be_moved_spaces('diagonaol up right', [piece.x_pos - i, piece.y_pos + i], piece, total_board), total_board, dont_move = true) != false 
+            [piece.x_pos - i, piece.y_pos + i, 'diagonaol up left']
+          end
         end,
         piece.range.map do |i|
-          [piece.x_pos + i, piece.y_pos + i, 'diagonaol up right']
+          if (piece.y_pos + i).between?(1,8) && (piece.x_pos + i).between?(1,8) && no_collision == true|| check_for_collision('diagonaol up right', [piece.x_pos + i, piece.y_pos + i], piece, find_to_be_moved_spaces('diagonaol up right', [piece.x_pos + i, piece.y_pos + i], piece, total_board), total_board, dont_move = true) != false 
+            [piece.x_pos + i, piece.y_pos + i, 'diagonaol up right']
+          end
         end,
         piece.range.map do |i|
-          [piece.x_pos - i, piece.y_pos - i, 'diagonaol down left']
+          if (piece.y_pos - i).between?(1,8) && (piece.x_pos - i).between?(1,8) && no_collision == true|| check_for_collision('diagonaol down left', [piece.x_pos - i, piece.y_pos - i], piece, find_to_be_moved_spaces('diagonaol down left', [piece.x_pos - i, piece.y_pos - i], piece, total_board), total_board, dont_move = true) != false
+            [piece.x_pos - i, piece.y_pos - i, 'diagonaol down left']
+          end
         end,
         piece.range.map do |i|
-          [piece.x_pos + i, piece.y_pos - i, 'diagonaol down right']
+          if (piece.y_pos - i).between?(1,8) && (piece.x_pos + i).between?(1,8) && no_collision == true|| check_for_collision('diagonaol down right', [piece.x_pos + i, piece.y_pos - i], piece, find_to_be_moved_spaces('diagonaol down right', [piece.x_pos + i, piece.y_pos - i], piece, total_board), total_board, dont_move = true) != false
+            [piece.x_pos + i, piece.y_pos - i, 'diagonaol down right']
+          end
         end
         # piece.range.map { |i| [piece.x_pos, piece.y_pos, 'No move'] } # No move
       ]
     end
+  end
+
+  def move_self(selected_position, new_position, total_board, game, dont_move,no_collision = false)
+    # @x_pos = selected_position[0]
+    # @y_pos = selected_position[1]
+
     queen_to_move = find_queen(selected_position, total_board)
     # puts "queen_to_move.transforms #{queen_to_move.transforms}"
     queen_to_move.transforms.each do |item|
@@ -87,7 +112,8 @@ class QUEENS
         # puts "moved spaces is #{moved_spaces}"
         if moved_spaces.nil? || check_for_collision(transform_used, new_position, queen_to_move, moved_spaces,
                                                     total_board, dont_move) == (false)
-          return false
+          return false unless no_collision
+          return true
         else
 
           # puts 'True?'
@@ -124,7 +150,7 @@ class QUEENS
           next if transform.nil?
 
           queen_transforms << [transform[0], transform[1], piece.team,
-                               piece.current_position]
+                               piece.current_position,transform[2]]
           # puts "transforms #{[transform[0], transform[1]]}"
         end
       end
@@ -138,16 +164,55 @@ class QUEENS
       selected_position = transform[3]
       new_position = [transform[0], transform[1]] if transform[0].between?(1, 8) && transform [1].between?(1, 8)
       # puts "new position is #{new_position}"
-      next unless move_queen(selected_position, new_position, total_board, game, dont_move = true) != false
+      next unless move_self(selected_position, new_position, total_board, game, dont_move = true) != false
 
       if transform.include?('white')
-        queen_transforms_white << [transform[0], transform[1]]
+        queen_transforms_white << [[transform[0], transform[1]],transform[3],transform[4]]
       elsif transform.include?('black')
-        queen_transforms_black << [transform[0], transform[1]]
+        queen_transforms_black << [[transform[0], transform[1]],transform[3],transform[4]]
       end
     end
     [queen_transforms_black.uniq, queen_transforms_white.uniq]
   end
+  def get_possible_moves_no_collision(total_board, game)
+    # update_transforms(total_board)
+    dont_move = true
+    queen_transforms_black_no_collision = []
+    queen_transforms_white_no_collision = []
+    queen_transforms = []
+    total_board.flatten.each do |piece|
+      next unless piece.name.include?('Queen')
+
+      piece.transforms.each do |transform_pair|
+        transform_pair.each do |transform|
+          next if transform.nil?
+
+          queen_transforms << [transform[0], transform[1], piece.team,
+                               piece.current_position,transform[2]]
+          # puts "transforms #{[transform[0], transform[1]]}"
+        end
+      end
+    end
+    # p queen_transforms
+    # selected_position = []
+    queen_transforms.each do |transform|
+      # puts "transform #{transform}"
+      # next if selected_position == transform[3]
+
+      selected_position = transform[3]
+      new_position = [transform[0], transform[1]] if transform[0].between?(1, 8) && transform [1].between?(1, 8)
+      # puts "new position is #{new_position}"
+      next unless move_self(selected_position, new_position, total_board, game, dont_move = true,no_collision = true) != false
+
+      if transform.include?('white')
+        queen_transforms_white_no_collision << [[transform[0], transform[1]],transform[3],transform[4]]
+      elsif transform.include?('black')
+        queen_transforms_black_no_collision << [[transform[0], transform[1]],transform[3],transform[4]]
+      end
+    end
+    [queen_transforms_black_no_collision.uniq, queen_transforms_white_no_collision.uniq]
+  end
+
 
   def find_queen(selected_position, total_board)
     total_board.flatten.find { |queen| queen.instance_variable_get(:@current_position) == selected_position }
@@ -197,7 +262,10 @@ class QUEENS
           return false
         elsif piece.current_position == space && queen_to_move.team != piece.team && dont_move == false && piece.current_position == new_position
           piece.current_position = [-10, -10]
+          # total_board.delete(piece)
           puts 'Capture'
+          return true
+        elsif piece.current_position == space && queen_to_move.team != piece.team
           return true
         elsif piece.current_position == space && queen_to_move.team != piece.team && piece.current_position != new_position
           return false

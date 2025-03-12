@@ -1,0 +1,1693 @@
+---
+- - - !ruby/object:PAWNS
+      count: 0
+      count_pawn: 0
+      team: white
+      captured: false
+      pawns_arr: []
+      has_moved: false
+      name: White Pawn
+      x_pos: 1
+      y_pos: 2
+      starting_pos:
+      - 1
+      - 2
+      current_x: 1
+      current_y: 2
+      current_position:
+      - 1
+      - 2
+      range: &1 !ruby/range
+        begin: 1
+        end: 2
+        excl: false
+      transforms:
+      - - - 1
+          - 3
+          - vertical up pawn
+        - - 1
+          - 4
+          - vertical up pawn
+      - -
+        -
+      - - - 0
+          - 3
+          - diagonaol up left
+      - - - 2
+          - 3
+          - diagonaol up right
+      - - - 0
+          - 1
+          - diagonaol down left
+      - -
+    - !ruby/object:PAWNS
+      count: 0
+      count_pawn: 0
+      team: white
+      captured: false
+      pawns_arr: []
+      has_moved: false
+      name: White Pawn
+      x_pos: 2
+      y_pos: 2
+      starting_pos:
+      - 2
+      - 2
+      current_x: 2
+      current_y: 2
+      current_position:
+      - 2
+      - 2
+      range: *1
+      transforms:
+      - - - 2
+          - 3
+          - vertical up pawn
+        - - 2
+          - 4
+          - vertical up pawn
+      - -
+        -
+      - - - 1
+          - 3
+          - diagonaol up left
+      - - - 3
+          - 3
+          - diagonaol up right
+      - - - 1
+          - 1
+          - diagonaol down left
+      - -
+    - !ruby/object:PAWNS
+      count: 0
+      count_pawn: 0
+      team: white
+      captured: false
+      pawns_arr: []
+      has_moved: false
+      name: White Pawn
+      x_pos: 3
+      y_pos: 2
+      starting_pos:
+      - 3
+      - 2
+      current_x: 3
+      current_y: 2
+      current_position:
+      - 3
+      - 2
+      range: *1
+      transforms:
+      - - - 3
+          - 3
+          - vertical up pawn
+        - - 3
+          - 4
+          - vertical up pawn
+      - -
+        -
+      - - - 2
+          - 3
+          - diagonaol up left
+      - - - 4
+          - 3
+          - diagonaol up right
+      - -
+      - -
+    - !ruby/object:PAWNS
+      count: 0
+      count_pawn: 0
+      team: white
+      captured: false
+      pawns_arr: []
+      has_moved: false
+      name: White Pawn
+      x_pos: 4
+      y_pos: 2
+      starting_pos:
+      - 4
+      - 2
+      current_x: 4
+      current_y: 2
+      current_position:
+      - 4
+      - 2
+      range: *1
+      transforms:
+      - - - 4
+          - 3
+          - vertical up pawn
+        - - 4
+          - 4
+          - vertical up pawn
+      - -
+        -
+      - - - 3
+          - 3
+          - diagonaol up left
+      - - - 5
+          - 3
+          - diagonaol up right
+      - -
+      - -
+    - !ruby/object:PAWNS
+      count: 0
+      count_pawn: 0
+      team: white
+      captured: false
+      pawns_arr: []
+      has_moved: false
+      name: White Pawn
+      x_pos: 5
+      y_pos: 2
+      starting_pos:
+      - 5
+      - 2
+      current_x: 5
+      current_y: 2
+      current_position:
+      - 5
+      - 2
+      range: *1
+      transforms:
+      - - - 5
+          - 3
+          - vertical up pawn
+        - - 5
+          - 4
+          - vertical up pawn
+      - -
+        -
+      - - - 4
+          - 3
+          - diagonaol up left
+      - - - 6
+          - 3
+          - diagonaol up right
+      - -
+      - -
+    - !ruby/object:PAWNS
+      count: 0
+      count_pawn: 0
+      team: white
+      captured: false
+      pawns_arr: []
+      has_moved: false
+      name: White Pawn
+      x_pos: 6
+      y_pos: 2
+      starting_pos:
+      - 6
+      - 2
+      current_x: 6
+      current_y: 2
+      current_position:
+      - 6
+      - 2
+      range: *1
+      transforms:
+      - - - 6
+          - 3
+          - vertical up pawn
+        - - 6
+          - 4
+          - vertical up pawn
+      - -
+        -
+      - - - 5
+          - 3
+          - diagonaol up left
+      - - - 7
+          - 3
+          - diagonaol up right
+      - -
+      - -
+    - !ruby/object:PAWNS
+      count: 0
+      count_pawn: 0
+      team: white
+      captured: false
+      pawns_arr: []
+      has_moved: false
+      name: White Pawn
+      x_pos: 7
+      y_pos: 2
+      starting_pos:
+      - 7
+      - 2
+      current_x: 7
+      current_y: 2
+      current_position:
+      - 7
+      - 2
+      range: *1
+      transforms:
+      - - - 7
+          - 3
+          - vertical up pawn
+        - - 7
+          - 4
+          - vertical up pawn
+      - -
+        -
+      - - - 6
+          - 3
+          - diagonaol up left
+      - - - 8
+          - 3
+          - diagonaol up right
+      - -
+      - - - 8
+          - 1
+          - diagonaol down right
+    - !ruby/object:PAWNS
+      count: 0
+      count_pawn: 0
+      team: white
+      captured: false
+      pawns_arr: []
+      has_moved: false
+      name: White Pawn
+      x_pos: 8
+      y_pos: 2
+      starting_pos:
+      - 8
+      - 2
+      current_x: 8
+      current_y: 2
+      current_position:
+      - 8
+      - 2
+      range: *1
+      transforms:
+      - - - 8
+          - 3
+          - vertical up pawn
+        - - 8
+          - 4
+          - vertical up pawn
+      - -
+        -
+      - - - 7
+          - 3
+          - diagonaol up left
+      - - - 9
+          - 3
+          - diagonaol up right
+      - -
+      - - - 9
+          - 1
+          - diagonaol down right
+  - - !ruby/object:PAWNS
+      count: 0
+      count_pawn: 0
+      team: black
+      captured: false
+      pawns_arr: []
+      has_moved: false
+      name: Black Pawn
+      x_pos: 1
+      y_pos: 7
+      starting_pos:
+      - 1
+      - 7
+      current_x: 1
+      current_y: 7
+      current_position:
+      - 1
+      - 7
+      range: *1
+      transforms:
+      - -
+        -
+      - - - 1
+          - 6
+          - vertical down pawn
+        - - 1
+          - 5
+          - vertical down pawn
+      - - - 0
+          - 8
+          - diagonaol up left
+      - -
+      - - - 0
+          - 6
+          - diagonaol down left
+      - - - 2
+          - 6
+          - diagonaol down right
+    - !ruby/object:PAWNS
+      count: 0
+      count_pawn: 0
+      team: black
+      captured: false
+      pawns_arr: []
+      has_moved: false
+      name: Black Pawn
+      x_pos: 2
+      y_pos: 7
+      starting_pos:
+      - 2
+      - 7
+      current_x: 2
+      current_y: 7
+      current_position:
+      - 2
+      - 7
+      range: *1
+      transforms:
+      - -
+        -
+      - - - 2
+          - 6
+          - vertical down pawn
+        - - 2
+          - 5
+          - vertical down pawn
+      - -
+      - -
+      - - - 1
+          - 6
+          - diagonaol down left
+      - - - 3
+          - 6
+          - diagonaol down right
+    - !ruby/object:PAWNS
+      count: 0
+      count_pawn: 0
+      team: black
+      captured: false
+      pawns_arr: []
+      has_moved: false
+      name: Black Pawn
+      x_pos: 3
+      y_pos: 7
+      starting_pos:
+      - 3
+      - 7
+      current_x: 3
+      current_y: 7
+      current_position:
+      - 3
+      - 7
+      range: *1
+      transforms:
+      - -
+        -
+      - - - 3
+          - 6
+          - vertical down pawn
+        - - 3
+          - 5
+          - vertical down pawn
+      - -
+      - -
+      - - - 2
+          - 6
+          - diagonaol down left
+      - - - 4
+          - 6
+          - diagonaol down right
+    - !ruby/object:PAWNS
+      count: 0
+      count_pawn: 0
+      team: black
+      captured: false
+      pawns_arr: []
+      has_moved: false
+      name: Black Pawn
+      x_pos: 4
+      y_pos: 7
+      starting_pos:
+      - 4
+      - 7
+      current_x: 4
+      current_y: 7
+      current_position:
+      - 4
+      - 7
+      range: *1
+      transforms:
+      - -
+        -
+      - - - 4
+          - 6
+          - vertical down pawn
+        - - 4
+          - 5
+          - vertical down pawn
+      - -
+      - - - 5
+          - 8
+          - diagonaol up right
+      - - - 3
+          - 6
+          - diagonaol down left
+      - - - 5
+          - 6
+          - diagonaol down right
+    - !ruby/object:PAWNS
+      count: 0
+      count_pawn: 0
+      team: black
+      captured: false
+      pawns_arr: []
+      has_moved: false
+      name: Black Pawn
+      x_pos: 5
+      y_pos: 7
+      starting_pos:
+      - 5
+      - 7
+      current_x: 5
+      current_y: 7
+      current_position:
+      - 5
+      - 7
+      range: *1
+      transforms:
+      - -
+        -
+      - - - 5
+          - 6
+          - vertical down pawn
+        - - 5
+          - 5
+          - vertical down pawn
+      - -
+      - -
+      - - - 4
+          - 6
+          - diagonaol down left
+      - - - 6
+          - 6
+          - diagonaol down right
+    - !ruby/object:PAWNS
+      count: 0
+      count_pawn: 0
+      team: black
+      captured: false
+      pawns_arr: []
+      has_moved: false
+      name: Black Pawn
+      x_pos: 6
+      y_pos: 7
+      starting_pos:
+      - 6
+      - 7
+      current_x: 6
+      current_y: 7
+      current_position:
+      - 6
+      - 7
+      range: *1
+      transforms:
+      - -
+        -
+      - - - 6
+          - 6
+          - vertical down pawn
+        - - 6
+          - 5
+          - vertical down pawn
+      - - - 5
+          - 8
+          - diagonaol up left
+      - -
+      - - - 5
+          - 6
+          - diagonaol down left
+      - - - 7
+          - 6
+          - diagonaol down right
+    - !ruby/object:PAWNS
+      count: 0
+      count_pawn: 0
+      team: black
+      captured: false
+      pawns_arr: []
+      has_moved: false
+      name: Black Pawn
+      x_pos: 7
+      y_pos: 7
+      starting_pos:
+      - 7
+      - 7
+      current_x: 7
+      current_y: 7
+      current_position:
+      - 7
+      - 7
+      range: *1
+      transforms:
+      - -
+        -
+      - - - 7
+          - 6
+          - vertical down pawn
+        - - 7
+          - 5
+          - vertical down pawn
+      - -
+      - -
+      - - - 6
+          - 6
+          - diagonaol down left
+      - - - 8
+          - 6
+          - diagonaol down right
+    - !ruby/object:PAWNS
+      count: 0
+      count_pawn: 0
+      team: black
+      captured: false
+      pawns_arr: []
+      has_moved: false
+      name: Black Pawn
+      x_pos: 8
+      y_pos: 7
+      starting_pos:
+      - 8
+      - 7
+      current_x: 8
+      current_y: 7
+      current_position:
+      - 8
+      - 7
+      range: *1
+      transforms:
+      - -
+        -
+      - - - 8
+          - 6
+          - vertical down pawn
+        - - 8
+          - 5
+          - vertical down pawn
+      - -
+      - - - 9
+          - 8
+          - diagonaol up right
+      - - - 7
+          - 6
+          - diagonaol down left
+      - - - 9
+          - 6
+          - diagonaol down right
+- - !ruby/object:KNIGHTS
+    team: white
+    captured: false
+    knights_arr: []
+    has_moved: false
+    name: White Knight
+    x_pos: 2
+    y_pos: 1
+    starting_pos:
+    - 2
+    - 1
+    current_x: 2
+    current_y: 1
+    current_position:
+    - 2
+    - 1
+    range: &2 !ruby/range
+      begin: 1
+      end: 1
+      excl: false
+    transforms:
+    - - - 1
+        - 3
+        - Up Left L
+    - - - 3
+        - 3
+        - Up Right L
+    - -
+    - -
+  - !ruby/object:KNIGHTS
+    team: white
+    captured: false
+    knights_arr: []
+    has_moved: false
+    name: White Knight
+    x_pos: 7
+    y_pos: 1
+    starting_pos:
+    - 7
+    - 1
+    current_x: 7
+    current_y: 1
+    current_position:
+    - 7
+    - 1
+    range: *2
+    transforms:
+    - - - 6
+        - 3
+        - Up Left L
+    - - - 8
+        - 3
+        - Up Right L
+    - -
+    - -
+  - !ruby/object:KNIGHTS
+    team: black
+    captured: false
+    knights_arr: []
+    has_moved: false
+    name: Black Knight
+    x_pos: 2
+    y_pos: 8
+    starting_pos:
+    - 2
+    - 8
+    current_x: 2
+    current_y: 8
+    current_position:
+    - 2
+    - 8
+    range: *2
+    transforms:
+    - -
+    - -
+    - - - 1
+        - 6
+        - Down Left L
+    - - - 3
+        - 6
+        - Down Right L
+  - !ruby/object:KNIGHTS
+    team: black
+    captured: false
+    knights_arr: []
+    has_moved: false
+    name: Black Knight
+    x_pos: 7
+    y_pos: 8
+    starting_pos:
+    - 7
+    - 8
+    current_x: 7
+    current_y: 8
+    current_position:
+    - 7
+    - 8
+    range: *2
+    transforms:
+    - -
+    - -
+    - - - 6
+        - 6
+        - Down Left L
+    - - - 8
+        - 6
+        - Down Right L
+- - !ruby/object:QUEENS
+    count_queen: 0
+    team: black
+    captured: false
+    queens_arr: []
+    has_moved: false
+    name: Black Queen
+    x_pos: 4
+    y_pos: 8
+    starting_pos:
+    - 4
+    - 8
+    current_x: 4
+    current_y: 8
+    current_position:
+    - 4
+    - 8
+    range: &3 !ruby/range
+      begin: 1
+      end: 7
+      excl: false
+    transforms:
+    - - - 4
+        - 9
+        - vertical up
+      - - 4
+        - 10
+        - vertical up
+      - - 4
+        - 11
+        - vertical up
+      - - 4
+        - 12
+        - vertical up
+      - - 4
+        - 13
+        - vertical up
+      - - 4
+        - 14
+        - vertical up
+      - - 4
+        - 15
+        - vertical up
+    - -
+      -
+      -
+      -
+      -
+      -
+      -
+    - - - 5
+        - 8
+        - horizontal right
+      - - 6
+        - 8
+        - horizontal right
+      - - 7
+        - 8
+        - horizontal right
+      - - 8
+        - 8
+        - horizontal right
+      - - 9
+        - 8
+        - horizontal right
+      - - 10
+        - 8
+        - horizontal right
+      - - 11
+        - 8
+        - horizontal right
+    - -
+      -
+      -
+      -
+      -
+      -
+      -
+    - - - 3
+        - 9
+        - diagonaol up left
+      - - 2
+        - 10
+        - diagonaol up left
+      - - 1
+        - 11
+        - diagonaol up left
+      - - 0
+        - 12
+        - diagonaol up left
+      - - -1
+        - 13
+        - diagonaol up left
+      - - -2
+        - 14
+        - diagonaol up left
+      - - -3
+        - 15
+        - diagonaol up left
+    - - - 5
+        - 9
+        - diagonaol up right
+      - - 6
+        - 10
+        - diagonaol up right
+      - - 7
+        - 11
+        - diagonaol up right
+      - - 8
+        - 12
+        - diagonaol up right
+      - - 9
+        - 13
+        - diagonaol up right
+      - - 10
+        - 14
+        - diagonaol up right
+      - - 11
+        - 15
+        - diagonaol up right
+    - -
+      -
+      -
+      -
+      -
+      -
+      -
+    - -
+      -
+      -
+      -
+      -
+      -
+      -
+  - !ruby/object:QUEENS
+    count_queen: 0
+    team: white
+    captured: false
+    queens_arr: []
+    has_moved: false
+    name: White Queen
+    x_pos: 4
+    y_pos: 1
+    starting_pos:
+    - 4
+    - 1
+    current_x: 4
+    current_y: 1
+    current_position:
+    - 4
+    - 1
+    range: *3
+    transforms:
+    - - - 4
+        - 2
+        - vertical up
+      - - 4
+        - 3
+        - vertical up
+      - - 4
+        - 4
+        - vertical up
+      - - 4
+        - 5
+        - vertical up
+      - - 4
+        - 6
+        - vertical up
+      - - 4
+        - 7
+        - vertical up
+      - - 4
+        - 8
+        - vertical up
+    - - - 4
+        - 0
+        - vertical down
+      - - 4
+        - -1
+        - vertical down
+      - - 4
+        - -2
+        - vertical down
+      - - 4
+        - -3
+        - vertical down
+      - - 4
+        - -4
+        - vertical down
+      - - 4
+        - -5
+        - vertical down
+      - - 4
+        - -6
+        - vertical down
+    - - - 5
+        - 1
+        - horizontal right
+      - - 6
+        - 1
+        - horizontal right
+      - - 7
+        - 1
+        - horizontal right
+      - - 8
+        - 1
+        - horizontal right
+      - - 9
+        - 1
+        - horizontal right
+      - - 10
+        - 1
+        - horizontal right
+      - - 11
+        - 1
+        - horizontal right
+    - -
+      -
+      -
+      -
+      -
+      -
+      -
+    - -
+      -
+      -
+      -
+      -
+      -
+      -
+    - -
+      -
+      -
+      -
+      -
+      -
+      -
+    - - - 3
+        - 0
+        - diagonaol down left
+      - - 2
+        - -1
+        - diagonaol down left
+      - - 1
+        - -2
+        - diagonaol down left
+      - - 0
+        - -3
+        - diagonaol down left
+      - - -1
+        - -4
+        - diagonaol down left
+      - - -2
+        - -5
+        - diagonaol down left
+      - - -3
+        - -6
+        - diagonaol down left
+    - - - 5
+        - 0
+        - diagonaol down right
+      - - 6
+        - -1
+        - diagonaol down right
+      - - 7
+        - -2
+        - diagonaol down right
+      - - 8
+        - -3
+        - diagonaol down right
+      - - 9
+        - -4
+        - diagonaol down right
+      - - 10
+        - -5
+        - diagonaol down right
+      - - 11
+        - -6
+        - diagonaol down right
+- - !ruby/object:KINGS
+    team: black
+    captured: false
+    kings_arr: []
+    has_moved: false
+    name: Black King
+    x_pos: 6
+    y_pos: 5
+    starting_pos:
+    - 6
+    - 5
+    current_x: 6
+    current_y: 5
+    current_position:
+    - 6
+    - 5
+    range: &4 !ruby/range
+      begin: 1
+      end: 1
+      excl: false
+    transforms:
+    - - - 6
+        - 6
+        - vertical up
+    - -
+    - - - 7
+        - 5
+        - horizontal right
+    - - - 5
+        - 5
+        - horizontal left
+    - - - 5
+        - 6
+        - diagonaol up left
+    - - - 7
+        - 6
+        - diagonaol up right
+    - - - 5
+        - 4
+        - diagonaol down left
+    - - - 7
+        - 4
+        - diagonaol down right
+  - !ruby/object:KINGS
+    team: white
+    captured: false
+    kings_arr: []
+    has_moved: false
+    name: White King
+    x_pos: 5
+    y_pos: 1
+    starting_pos:
+    - 5
+    - 1
+    current_x: 5
+    current_y: 1
+    current_position:
+    - 5
+    - 1
+    range: *4
+    transforms:
+    - - - 5
+        - 2
+        - vertical up
+    - -
+    - - - 6
+        - 1
+        - horizontal right
+    - -
+    - -
+    - -
+    - -
+    - -
+- - !ruby/object:ROOKS
+    count: 0
+    team: black
+    captured: false
+    rooks_arr: []
+    has_moved: false
+    name: Black Rook
+    x_pos: 1
+    y_pos: 8
+    starting_pos:
+    - 1
+    - 8
+    current_x: 1
+    current_y: 8
+    current_position:
+    - 1
+    - 8
+    range: &5 !ruby/range
+      begin: 1
+      end: 7
+      excl: false
+    transforms:
+    - - - 1
+        - 9
+        - vertical up
+      - - 1
+        - 10
+        - vertical up
+      - - 1
+        - 11
+        - vertical up
+      - - 1
+        - 12
+        - vertical up
+      - - 1
+        - 13
+        - vertical up
+      - - 1
+        - 14
+        - vertical up
+      - - 1
+        - 15
+        - vertical up
+    - -
+      -
+      -
+      -
+      -
+      -
+      -
+    - - - 2
+        - 8
+        - horizontal right
+      - - 3
+        - 8
+        - horizontal right
+      - - 4
+        - 8
+        - horizontal right
+      - - 5
+        - 8
+        - horizontal right
+      - - 6
+        - 8
+        - horizontal right
+      - - 7
+        - 8
+        - horizontal right
+      - - 8
+        - 8
+        - horizontal right
+    - - - 0
+        - 8
+        - horizontal left
+      - - -1
+        - 8
+        - horizontal left
+      - - -2
+        - 8
+        - horizontal left
+      - - -3
+        - 8
+        - horizontal left
+      - - -4
+        - 8
+        - horizontal left
+      - - -5
+        - 8
+        - horizontal left
+      - - -6
+        - 8
+        - horizontal left
+  - !ruby/object:ROOKS
+    count: 0
+    team: black
+    captured: false
+    rooks_arr: []
+    has_moved: false
+    name: Black Rook
+    x_pos: 8
+    y_pos: 8
+    starting_pos:
+    - 8
+    - 8
+    current_x: 8
+    current_y: 8
+    current_position:
+    - 8
+    - 8
+    range: *5
+    transforms:
+    - - - 8
+        - 9
+        - vertical up
+      - - 8
+        - 10
+        - vertical up
+      - - 8
+        - 11
+        - vertical up
+      - - 8
+        - 12
+        - vertical up
+      - - 8
+        - 13
+        - vertical up
+      - - 8
+        - 14
+        - vertical up
+      - - 8
+        - 15
+        - vertical up
+    - -
+      -
+      -
+      -
+      -
+      -
+      -
+    - - - 9
+        - 8
+        - horizontal right
+      - - 10
+        - 8
+        - horizontal right
+      - - 11
+        - 8
+        - horizontal right
+      - - 12
+        - 8
+        - horizontal right
+      - - 13
+        - 8
+        - horizontal right
+      - - 14
+        - 8
+        - horizontal right
+      - - 15
+        - 8
+        - horizontal right
+    - -
+      -
+      -
+      -
+      -
+      -
+      -
+  - !ruby/object:ROOKS
+    count: 0
+    team: white
+    captured: false
+    rooks_arr: []
+    has_moved: false
+    name: White Rook
+    x_pos: 8
+    y_pos: 6
+    starting_pos:
+    - 8
+    - 6
+    current_x: 8
+    current_y: 6
+    current_position:
+    - 8
+    - 6
+    range: *5
+    transforms:
+    - - - 8
+        - 7
+        - vertical up
+      - - 8
+        - 8
+        - vertical up
+      - - 8
+        - 9
+        - vertical up
+      - - 8
+        - 10
+        - vertical up
+      - - 8
+        - 11
+        - vertical up
+      - - 8
+        - 12
+        - vertical up
+      - - 8
+        - 13
+        - vertical up
+    - -
+      -
+      -
+      -
+      -
+      -
+      -
+    - - - 9
+        - 6
+        - horizontal right
+      - - 10
+        - 6
+        - horizontal right
+      - - 11
+        - 6
+        - horizontal right
+      - - 12
+        - 6
+        - horizontal right
+      - - 13
+        - 6
+        - horizontal right
+      - - 14
+        - 6
+        - horizontal right
+      - - 15
+        - 6
+        - horizontal right
+    - - - 7
+        - 6
+        - horizontal left
+      - - 6
+        - 6
+        - horizontal left
+      - - 5
+        - 6
+        - horizontal left
+      - - 4
+        - 6
+        - horizontal left
+      - - 3
+        - 6
+        - horizontal left
+      - - 2
+        - 6
+        - horizontal left
+      - - 1
+        - 6
+        - horizontal left
+  - !ruby/object:ROOKS
+    count: 0
+    team: white
+    captured: false
+    rooks_arr: []
+    has_moved: false
+    name: White Rook
+    x_pos: 8
+    y_pos: 5
+    starting_pos:
+    - 8
+    - 5
+    current_x: 8
+    current_y: 5
+    current_position:
+    - 8
+    - 5
+    range: *5
+    transforms:
+    - - - 8
+        - 6
+        - vertical up
+      - - 8
+        - 7
+        - vertical up
+      - - 8
+        - 8
+        - vertical up
+      - - 8
+        - 9
+        - vertical up
+      - - 8
+        - 10
+        - vertical up
+      - - 8
+        - 11
+        - vertical up
+      - - 8
+        - 12
+        - vertical up
+    - -
+      -
+      -
+      -
+      -
+      -
+      -
+    - - - 9
+        - 5
+        - horizontal right
+      - - 10
+        - 5
+        - horizontal right
+      - - 11
+        - 5
+        - horizontal right
+      - - 12
+        - 5
+        - horizontal right
+      - - 13
+        - 5
+        - horizontal right
+      - - 14
+        - 5
+        - horizontal right
+      - - 15
+        - 5
+        - horizontal right
+    - - - 7
+        - 5
+        - horizontal left
+      - - 6
+        - 5
+        - horizontal left
+      - - 5
+        - 5
+        - horizontal left
+      - - 4
+        - 5
+        - horizontal left
+      - - 3
+        - 5
+        - horizontal left
+      - - 2
+        - 5
+        - horizontal left
+      - - 1
+        - 5
+        - horizontal left
+- - !ruby/object:BISHOPS
+    count_bishop: 0
+    team: black
+    captured: false
+    bishops_arr: []
+    has_moved: false
+    name: Black Bishop
+    x_pos: 3
+    y_pos: 8
+    starting_pos:
+    - 3
+    - 8
+    current_x: 3
+    current_y: 8
+    current_position:
+    - 3
+    - 8
+    range: &6 !ruby/range
+      begin: 1
+      end: 7
+      excl: false
+    transforms:
+    - - - 2
+        - 9
+        - diagonaol up left
+      - - 1
+        - 10
+        - diagonaol up left
+      - - 0
+        - 11
+        - diagonaol up left
+      - - -1
+        - 12
+        - diagonaol up left
+      - - -2
+        - 13
+        - diagonaol up left
+      - - -3
+        - 14
+        - diagonaol up left
+      - - -4
+        - 15
+        - diagonaol up left
+    - - - 4
+        - 9
+        - diagonaol up right
+      - - 5
+        - 10
+        - diagonaol up right
+      - - 6
+        - 11
+        - diagonaol up right
+      - - 7
+        - 12
+        - diagonaol up right
+      - - 8
+        - 13
+        - diagonaol up right
+      - - 9
+        - 14
+        - diagonaol up right
+      - - 10
+        - 15
+        - diagonaol up right
+    - -
+      -
+      -
+      -
+      -
+      -
+      -
+    - -
+      -
+      -
+      -
+      -
+      -
+      -
+  - !ruby/object:BISHOPS
+    count_bishop: 0
+    team: black
+    captured: false
+    bishops_arr: []
+    has_moved: false
+    name: Black Bishop
+    x_pos: 6
+    y_pos: 8
+    starting_pos:
+    - 6
+    - 8
+    current_x: 6
+    current_y: 8
+    current_position:
+    - 6
+    - 8
+    range: *6
+    transforms:
+    - - - 5
+        - 9
+        - diagonaol up left
+      - - 4
+        - 10
+        - diagonaol up left
+      - - 3
+        - 11
+        - diagonaol up left
+      - - 2
+        - 12
+        - diagonaol up left
+      - - 1
+        - 13
+        - diagonaol up left
+      - - 0
+        - 14
+        - diagonaol up left
+      - - -1
+        - 15
+        - diagonaol up left
+    - - - 7
+        - 9
+        - diagonaol up right
+      - - 8
+        - 10
+        - diagonaol up right
+      - - 9
+        - 11
+        - diagonaol up right
+      - - 10
+        - 12
+        - diagonaol up right
+      - - 11
+        - 13
+        - diagonaol up right
+      - - 12
+        - 14
+        - diagonaol up right
+      - - 13
+        - 15
+        - diagonaol up right
+    - -
+      -
+      -
+      -
+      -
+      -
+      -
+    - -
+      -
+      -
+      -
+      -
+      -
+      -
+  - !ruby/object:BISHOPS
+    count_bishop: 0
+    team: white
+    captured: false
+    bishops_arr: []
+    has_moved: false
+    name: White Bishop
+    x_pos: 3
+    y_pos: 1
+    starting_pos:
+    - 3
+    - 1
+    current_x: 3
+    current_y: 1
+    current_position:
+    - 3
+    - 1
+    range: *6
+    transforms:
+    - -
+      -
+      -
+      -
+      -
+      -
+      -
+    - -
+      -
+      -
+      -
+      -
+      -
+      -
+    - - - 2
+        - 0
+        - diagonaol down left
+      - - 1
+        - -1
+        - diagonaol down left
+      - - 0
+        - -2
+        - diagonaol down left
+      - - -1
+        - -3
+        - diagonaol down left
+      - - -2
+        - -4
+        - diagonaol down left
+      - - -3
+        - -5
+        - diagonaol down left
+      - - -4
+        - -6
+        - diagonaol down left
+    - - - 4
+        - 0
+        - diagonaol down right
+      - - 5
+        - -1
+        - diagonaol down right
+      - - 6
+        - -2
+        - diagonaol down right
+      - - 7
+        - -3
+        - diagonaol down right
+      - - 8
+        - -4
+        - diagonaol down right
+      - - 9
+        - -5
+        - diagonaol down right
+      - - 10
+        - -6
+        - diagonaol down right
+  - !ruby/object:BISHOPS
+    count_bishop: 0
+    team: white
+    captured: false
+    bishops_arr: []
+    has_moved: false
+    name: White Bishop
+    x_pos: 6
+    y_pos: 1
+    starting_pos:
+    - 6
+    - 1
+    current_x: 6
+    current_y: 1
+    current_position:
+    - 6
+    - 1
+    range: *6
+    transforms:
+    - -
+      -
+      -
+      -
+      -
+      -
+      -
+    - -
+      -
+      -
+      -
+      -
+      -
+      -
+    - - - 5
+        - 0
+        - diagonaol down left
+      - - 4
+        - -1
+        - diagonaol down left
+      - - 3
+        - -2
+        - diagonaol down left
+      - - 2
+        - -3
+        - diagonaol down left
+      -
+      -
+      -
+    - - - 7
+        - 0
+        - diagonaol down right
+      - - 8
+        - -1
+        - diagonaol down right
+      - - 9
+        - -2
+        - diagonaol down right
+      - - 10
+        - -3
+        - diagonaol down right
+      - - 11
+        - -4
+        - diagonaol down right
+      -
+      -

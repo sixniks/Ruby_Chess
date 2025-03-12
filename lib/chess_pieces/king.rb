@@ -27,41 +27,67 @@ class KINGS
   end
 
   def make_kings
-    @black_king = KINGS.new('black', 'Black King', 4, 4)
+    @black_king = KINGS.new('black', 'Black King', 6, 5)
     @white_king = KINGS.new('white', 'White King', 5, 1)
     @kings = @black_king, @white_king
   end
 
-  def move_king(selected_position, new_position, total_board, game, dont_move)
-    # @x_pos = selected_position[0]
-    # @y_pos = selected_position[1]
+  def update_transforms(total_board)
+    #rubocop:disable all
     total_board.flatten.each do |piece|
       next unless piece.name.include?('King')
 
       piece.transforms = [
-        piece.range.map { |i| [piece.x_pos, piece.y_pos + i, 'vertical up'] }, # vertical up
-        piece.range.map { |i| [piece.x_pos, piece.y_pos - i, 'vertical down'] }, # vertical down
         piece.range.map do |i|
-          [piece.x_pos + i, piece.y_pos, 'horizontal right']
+          if (piece.y_pos + i).between?(1,8) && check_for_collision('vertical up', (piece.y_pos + i), piece, find_to_be_moved_spaces('vertical up', (piece.y_pos + i), piece, total_board), total_board, dont_move = true) != false
+            [piece.x_pos, piece.y_pos + i, 'vertical up'] 
+          end
+        end, 
+        piece.range.map do |i|
+          if (piece.y_pos - i).between?(1,8) && check_for_collision('vertical down', (piece.y_pos - i), piece, find_to_be_moved_spaces('vertical down', (piece.y_pos - i), piece, total_board), total_board, dont_move = true) != false
+            [piece.x_pos, piece.y_pos - i, 'vertical down'] 
+          end
+        end, 
+        piece.range.map do |i|
+          if (piece.x_pos + i).between?(1,8) && check_for_collision('horizontal right', (piece.x_pos + i), piece, find_to_be_moved_spaces('horizontal right', (piece.x_pos + i), piece, total_board), total_board, dont_move = true) != false
+            [piece.x_pos + i, piece.y_pos, 'horizontal right'] 
+          end
         end,
         piece.range.map do |i|
-          [piece.x_pos - i, piece.y_pos, 'horizontal left']
+          if (piece.x_pos - i).between?(1,8) && check_for_collision('horizontal left', (piece.x_pos - i), piece, find_to_be_moved_spaces('horizontal left', (piece.x_pos - i), piece, total_board), total_board, dont_move = true) != false
+            [piece.x_pos - i, piece.y_pos, 'horizontal left'] 
+          end
         end,
         piece.range.map do |i|
-          [piece.x_pos - i, piece.y_pos + i, 'diagonaol up left']
+          if (piece.y_pos + i).between?(1,8) && (piece.x_pos - i).between?(1,8) && check_for_collision('diagonaol up left', [piece.x_pos - i, piece.y_pos + i], piece, find_to_be_moved_spaces('diagonaol up left', [piece.x_pos - i, piece.y_pos + i], piece, total_board), total_board, dont_move = true) != false
+            [piece.x_pos - i, piece.y_pos + i, 'diagonaol up left'] 
+          end
         end,
         piece.range.map do |i|
-          [piece.x_pos + i, piece.y_pos + i, 'diagonaol up right']
+          if (piece.y_pos + i).between?(1,8) && (piece.x_pos + i).between?(1,8) && check_for_collision('diagonaol up right', [piece.x_pos + i, piece.y_pos + i], piece, find_to_be_moved_spaces('diagonaol up right', [piece.x_pos + i, piece.y_pos + i], piece, total_board), total_board, dont_move = true) != false
+            [piece.x_pos + i, piece.y_pos + i, 'diagonaol up right'] 
+          end
         end,
         piece.range.map do |i|
-          [piece.x_pos - i, piece.y_pos - i, 'diagonaol down left']
+          if (piece.y_pos - i).between?(1,8) && (piece.x_pos - i).between?(1,8) && check_for_collision('diagonaol down left', [piece.x_pos - i, piece.y_pos - i], piece, find_to_be_moved_spaces('diagonaol down left', [piece.x_pos - i, piece.y_pos - i], piece, total_board), total_board, dont_move = true) != false
+            [piece.x_pos - i, piece.y_pos - i, 'diagonaol down left'] 
+          end
         end,
         piece.range.map do |i|
-          [piece.x_pos + i, piece.y_pos - i, 'diagonaol down right']
+          if (piece.y_pos - i).between?(1,8) && (piece.x_pos + i).between?(1,8) && check_for_collision('diagonaol down right', [piece.x_pos + i, piece.y_pos - i], piece, find_to_be_moved_spaces('diagonaol down right', [piece.x_pos + i, piece.y_pos - i], piece, total_board), total_board, dont_move = true) != false
+            [piece.x_pos + i, piece.y_pos - i, 'diagonaol down right'] 
+          end
         end
         # piece.range.map { |i| [piece.x_pos, piece.y_pos, 'No move'] } # No move
       ]
     end
+  end
+  
+
+  def move_self(selected_position, new_position, total_board, game, dont_move,no_collision = false)
+    # @x_pos = selected_position[0]
+    # @y_pos = selected_position[1]
+
     king_to_move = find_king(selected_position, total_board)
     # puts "king_to_move.transforms #{king_to_move.transforms}"
     king_to_move.transforms.each do |item|
@@ -86,7 +112,7 @@ class KINGS
         # puts "moved spaces is #{moved_spaces}"
         if moved_spaces.nil? || check_for_collision(transform_used, new_position, king_to_move, moved_spaces,
                                                     total_board, dont_move) == (false)
-          return false
+          return false unless no_collision
         else
 
           # puts 'True?'
@@ -123,7 +149,7 @@ class KINGS
           next if transform.nil?
 
           king_transforms << [transform[0], transform[1], piece.team,
-                              piece.current_position]
+                              piece.current_position,transform[2]]
           # puts "transforms #{[transform[0], transform[1]]}"
         end
       end
@@ -137,15 +163,53 @@ class KINGS
       selected_position = transform[3]
       new_position = [transform[0], transform[1]] if transform[0].between?(1, 8) && transform [1].between?(1, 8)
       # puts "new position is #{new_position}"
-      next unless move_king(selected_position, new_position, total_board, game, dont_move = true) != false
+      next unless move_self(selected_position, new_position, total_board, game, dont_move = true) != false
 
       if transform.include?('white')
-        king_transforms_white << [transform[0], transform[1]]
+        king_transforms_white << [[transform[0], transform[1]],transform[3],transform[4]]
       elsif transform.include?('black')
-        king_transforms_black << [transform[0], transform[1]]
+        king_transforms_black << [[transform[0], transform[1]],transform[3],transform[4]]
       end
     end
     [king_transforms_black.uniq, king_transforms_white.uniq]
+  end
+  def get_possible_moves_no_collision(total_board, game)
+    # update_transforms(total_board)
+    dont_move = true
+    king_transforms_black_no_collision = []
+    king_transforms_white_no_collision = []
+    king_transforms = []
+    total_board.flatten.each do |piece|
+      next unless piece.name.include?('King')
+
+      piece.transforms.each do |transform_pair|
+        transform_pair.each do |transform|
+          next if transform.nil?
+
+          king_transforms << [transform[0], transform[1], piece.team,
+                              piece.current_position,transform[2]]
+          # puts "transforms #{[transform[0], transform[1]]}"
+        end
+      end
+    end
+    # p king_transforms
+    # selected_position = []
+    king_transforms.each do |transform|
+      # puts "transform #{transform}"
+      # next if selected_position == transform[3]
+
+      selected_position = transform[3]
+      new_position = [transform[0], transform[1]] if transform[0].between?(1, 8) && transform [1].between?(1, 8)
+      # puts "new position is #{new_position}"
+      next unless move_self(selected_position, new_position, total_board, game, dont_move = true,no_collision = true) != false
+
+      if transform.include?('white')
+        king_transforms_white_no_collision << [[transform[0], transform[1]],transform[3],transform[4]]
+      elsif transform.include?('black')
+        king_transforms_black_no_collision << [[transform[0], transform[1]],transform[3],transform[4]]
+      end
+    end
+    [king_transforms_black_no_collision.uniq, king_transforms_white_no_collision.uniq]
   end
 
   def find_king(selected_position, total_board)
@@ -196,6 +260,7 @@ class KINGS
           return false
         elsif piece.current_position == space && king_to_move.team != piece.team && dont_move == false
           piece.current_position = [-10, -10]
+          # total_board.delete(piece)
           puts 'capture'
           return true
         elsif piece.current_position == space && king_to_move.team != piece.team && piece.current_position != new_position
@@ -272,9 +337,9 @@ class KINGS
 
   def vertical_up(_transform_used, new_position, king_to_move, total_board)
     moved_spaces = []
-    x = new_position[0]
+    # x = new_position[0]
     y = new_position[1]
-    range = ((1)..(y - king_to_move.current_y))
+    range = ((0)..(y - king_to_move.current_y))
     transform = range.map { |i| [king_to_move.current_x, king_to_move.current_y + i] }
     moved_spaces << transform
     fixed_moved_spaces = moved_spaces.join('').each_char.each_slice(2).to_a
@@ -288,7 +353,7 @@ class KINGS
   def vertical_down(_transform_used, new_position, king_to_move, total_board)
     moved_spaces = []
     y = new_position[1]
-    range = ((1)..(king_to_move.current_y - y))
+    range = ((0)..(king_to_move.current_y - y))
     transform = range.map { |i| [king_to_move.current_x, king_to_move.current_y - i] }
 
     moved_spaces << transform

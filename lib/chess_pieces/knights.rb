@@ -32,20 +32,41 @@ class KNIGHTS
     @knights = @white_knight_left, @white_knight_right, @black_knight_left, @black_knight_right
   end
 
-  def move_knight(selected_position, new_position, total_board, game, dont_move)
-    # @x_pos = selected_position[0]
-    # @y_pos = selected_position[1]
+  def update_transforms(total_board)
+    #rubocop:disable all
     total_board.flatten.each do |piece|
       next unless piece.name.include?('Knight')
 
       piece.range = (1..1)
       piece.transforms = [
-        piece.range.map { [piece.x_pos - 1, piece.y_pos + 2, 'Up Left L'] }, # Up-Left L
-        piece.range.map { [piece.x_pos + 1, piece.y_pos + 2, 'Up Right L'] }, # Up-Right L
-        piece.range.map { [piece.x_pos - 1, piece.y_pos - 2, 'Down Left L'] }, # Down-Left L
-        piece.range.map { [piece.x_pos + 1, piece.y_pos - 2, 'Down Right L'] } # Down-Right L
+        piece.range.map do
+           if (piece.y_pos + 2).between?(1,8) && (piece.x_pos - 1).between?(1,8)
+          [piece.x_pos - 1, piece.y_pos + 2, 'Up Left L'] 
+           end
+        end,
+        piece.range.map do
+          if (piece.y_pos + 2).between?(1,8) && (piece.x_pos + 1).between?(1,8)
+            [piece.x_pos + 1, piece.y_pos + 2, 'Up Right L'] 
+          end
+        end, # Up-Right L
+        piece.range.map do
+          if (piece.y_pos - 2).between?(1,8) && (piece.x_pos - 1).between?(1,8)
+            [piece.x_pos - 1, piece.y_pos - 2, 'Down Left L'] 
+          end
+        end, # Down-Left L
+        piece.range.map do
+          if (piece.y_pos - 2).between?(1,8) && (piece.x_pos + 1).between?(1,8)
+            [piece.x_pos + 1, piece.y_pos - 2, 'Down Right L'] 
+          end
+        end
       ]
     end
+  end
+
+  def move_self(selected_position, new_position, total_board, game, dont_move,no_collision=false)
+    # @x_pos = selected_position[0]
+    # @y_pos = selected_position[1]
+
     knight_to_move = find_knight(selected_position, total_board)
     # puts "knight_to_move.transforms #{knight_to_move.transforms}"
     knight_to_move.transforms.each do |item|
@@ -70,7 +91,8 @@ class KNIGHTS
         # puts "moved spaces is #{moved_spaces}"
         if moved_spaces.nil? || check_for_collision(transform_used, new_position, knight_to_move, moved_spaces,
                                                     total_board, dont_move) == (false)
-          return false
+          return false unless no_collision
+          return true
         else
 
           # puts 'True?'
@@ -107,7 +129,7 @@ class KNIGHTS
           next if transform.nil?
 
           knight_transforms << [transform[0], transform[1], piece.team,
-                                piece.current_position]
+                                piece.current_position,transform[2]]
           # puts "transforms #{[transform[0], transform[1]]}"
         end
       end
@@ -122,15 +144,54 @@ class KNIGHTS
       selected_position = transform[3]
       new_position = [transform[0], transform[1]] if transform[0].between?(1, 8) && transform [1].between?(1, 8)
       # puts "new position is #{new_position}"
-      next unless move_knight(selected_position, new_position, total_board, game, dont_move = true) != false
+      next unless move_self(selected_position, new_position, total_board, game, dont_move = true) != false
 
       if transform.include?('white')
-        knight_transforms_white << [transform[0], transform[1]]
+        knight_transforms_white << [[transform[0], transform[1]],transform[3],transform[4]]
       elsif transform.include?('black')
-        knight_transforms_black << [transform[0], transform[1]]
+        knight_transforms_black << [[transform[0], transform[1]],transform[3],transform[4]]
       end
     end
     [knight_transforms_black.uniq, knight_transforms_white.uniq]
+  end
+  def get_possible_moves_no_collision(total_board, game)
+    # update_transforms(total_board)
+    dont_move = true
+    knight_transforms_black_no_collision = []
+    knight_transforms_white_no_collision = []
+    knight_transforms = []
+    total_board.flatten.each do |piece|
+      next unless piece.name.include?('Knight')
+
+      piece.transforms.each do |transform_pair|
+        transform_pair.each do |transform|
+          next if transform.nil?
+
+          knight_transforms << [transform[0], transform[1], piece.team,
+                                piece.current_position,transform[2]]
+          # puts "transforms #{[transform[0], transform[1]]}"
+        end
+      end
+    end
+    # end
+    # p knight_transforms
+    # selected_position = []
+    knight_transforms.each do |transform|
+      # puts "transform #{transform}"
+      # next if selected_position == transform[3]
+
+      selected_position = transform[3]
+      new_position = [transform[0], transform[1]] if transform[0].between?(1, 8) && transform [1].between?(1, 8)
+      # puts "new position is #{new_position}"
+      next unless move_self(selected_position, new_position, total_board, game, dont_move = true,no_collision = true) != false
+
+      if transform.include?('white')
+        knight_transforms_white_no_collision << [[transform[0], transform[1]],transform[3],transform[4]]
+      elsif transform.include?('black')
+        knight_transforms_black_no_collision << [[transform[0], transform[1]],transform[3],transform[4]]
+      end
+    end
+    [knight_transforms_black_no_collision.uniq, knight_transforms_white_no_collision.uniq]
   end
 
   def find_knight(selected_position, total_board)
@@ -171,8 +232,13 @@ class KNIGHTS
         # puts "space #{space}"
         # puts "piece team #{piece.team}"
         # puts "knight team #{knight_to_move.team}"
-        if piece.current_position == space && knight_to_move.team != piece.team && dont_move == false && piece.current_position == new_position
+        if piece.current_position == new_position && knight_to_move.team == piece.team
+
+          # puts 'Collision detected did you mean to capture a piece'
+          return false
+        elsif piece.current_position == space && knight_to_move.team != piece.team && dont_move == false && piece.current_position == new_position
           piece.current_position = [-10, -10]
+          # total_board.delete(piece)
           puts 'Capture'
           return true
         elsif piece.current_position == space && knight_to_move.team != piece.team && piece.current_position != new_position
